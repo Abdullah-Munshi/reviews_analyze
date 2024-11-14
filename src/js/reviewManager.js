@@ -5,13 +5,29 @@ import { fetchReviews } from "./dataService.js";
 import { timeAgo } from "./utils.js";
 
 export class ReviewManager {
-  constructor(containerId, controlsId) {
+  constructor(
+    containerId,
+    controlsId,
+    enablePagination = false,
+    compactLayout = false
+  ) {
     this.container = document.getElementById(containerId);
     this.controls = document.getElementById(controlsId);
+    this.enablePagination = enablePagination; // Enable pagination only for review-area
+    this.compactLayout = compactLayout;
+    this.paginationContainer = enablePagination
+      ? document.createElement("div")
+      : null;
+    if (this.paginationContainer) {
+      this.paginationContainer.classList.add("pagination");
+      this.container.after(this.paginationContainer);
+    }
     this.reviews = [];
     this.filteredReviews = [];
     this.currentSortOrder = "desc"; // Default to 'desc' for most recent
     this.currentRatingFilter = "all";
+    this.currentPage = 1;
+    this.itemsPerPage = 2;
   }
 
   async init() {
@@ -60,11 +76,17 @@ export class ReviewManager {
 
     // Set the default selected value to "desc" on load
     dateSortSelect.value = "desc";
+
+    if (this.enablePagination) {
+      this.updatePagination(); // Only for review-area
+    }
   }
 
   applySortAndFilter() {
     console.log("Current Rating Filter:", this.currentRatingFilter);
     console.log("Current Sort Order:", this.currentSortOrder);
+    // go to the first page
+    this.currentPage = 1;
     // Apply filtering first
     this.filterReviews(this.currentRatingFilter);
     console.log("Filtered Reviews:", this.filteredReviews);
@@ -73,6 +95,10 @@ export class ReviewManager {
     console.log("Sorted Reviews:", this.filteredReviews);
     // Render the results
     this.renderReviews();
+
+    if (this.enablePagination) {
+      this.updatePagination();
+    }
   }
 
   filterReviews(rating) {
@@ -88,9 +114,11 @@ export class ReviewManager {
 
   sortReviews(order, criteria) {
     const parseDate = (dateString) => {
-      const [month, day, year] = dateString.split("/").map(Number);
-      return new Date(year, month - 1, day);
+      const [day, month, year] = dateString.split("/").map(Number);
+      return new Date(year, month - 1, day); // JavaScript Date months are 0-indexed
     };
+
+    console.log("check date is format correctly or not", parseDate);
 
     this.filteredReviews.sort((a, b) => {
       if (criteria === "date") {
@@ -103,10 +131,40 @@ export class ReviewManager {
   }
   renderReviews() {
     this.container.innerHTML = "";
-    this.filteredReviews.forEach((review) => {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = this.enablePagination
+      ? startIndex + this.itemsPerPage
+      : this.filteredReviews.length;
+
+    const reviewsToDisplay = this.filteredReviews.slice(startIndex, endIndex);
+    reviewsToDisplay.forEach((review) => {
       const reviewElement = this.createReviewElement(review);
       this.container.appendChild(reviewElement);
     });
+  }
+
+  updatePagination() {
+    if (!this.enablePagination) return;
+
+    this.paginationContainer.innerHTML = "";
+
+    const totalPages = Math.ceil(
+      this.filteredReviews.length / this.itemsPerPage
+    );
+    for (let i = 1; i <= totalPages; i++) {
+      const pageButton = document.createElement("button");
+      pageButton.innerText = i;
+      pageButton.classList.add("page-button");
+      if (i === this.currentPage) pageButton.classList.add("active");
+
+      pageButton.addEventListener("click", () => {
+        this.currentPage = i;
+        this.renderReviews();
+        this.updatePagination();
+      });
+
+      this.paginationContainer.appendChild(pageButton);
+    }
   }
 
   createReviewElement(review) {
@@ -118,12 +176,11 @@ export class ReviewManager {
       ? review.comment.split(" ").slice(0, 10).join(" ") + "..."
       : review.comment;
 
-    reviewEl.innerHTML = `
-      <img src="${review.userAvatar}" alt="${
-      review.username
-    }" class="review-avatar" />
+    if (this.compactLayout) {
+      reviewEl.innerHTML = `
       <h4>${review.username}</h4>
       <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
+      <p>Date : ${review.purchaseDate}</p>
       <p>Rating: ${review.rating}</p>
       <p class="review-comment">${displayedComment}</p>
       <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
@@ -140,6 +197,31 @@ export class ReviewManager {
           : ""
       }
     `;
+    } else {
+      reviewEl.innerHTML = `
+      <img src="${review.userAvatar}" alt="${
+        review.username
+      }" class="review-avatar" />
+      <h4>${review.username}</h4>
+      <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
+      <p>Date : ${review.purchaseDate}</p>
+      <p>Rating: ${review.rating}</p>
+      <p class="review-comment">${displayedComment}</p>
+      <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
+      ${
+        isLongComment
+          ? `
+        <span class="toggle-more">
+          Show more
+            <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 16.5L6 10.5H18L12 16.5Z" fill="currentColor"/>
+            </svg>
+         
+        </span>`
+          : ""
+      }
+    `;
+    }
 
     if (isLongComment) {
       const toggleButton = reviewEl.querySelector(".toggle-more");

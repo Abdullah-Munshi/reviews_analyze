@@ -1,1 +1,35 @@
 @import "tom-select/dist/css/tom-select.css";
+
+/* Button to open the off-canvas */
+.open-widget-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Off-Canvas Styles */
+.offcanvas {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start off-screen */
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.offcanvas.show {
+  right: 0; /* Slide into view */
+}
+
+.close-widget-button {
+  display: block;
+  margin: 10px auto;
+}
+
+.page-button.active {
+  background: red;
+}
