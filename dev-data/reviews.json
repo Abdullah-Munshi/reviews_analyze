@@ -1,0 +1,301 @@
+[
+  {
+    "id": 1,
+    "userAvatar": "https://i.pravatar.cc/150?img=1",
+    "username": "Alice Johnson",
+    "purchaseDate": "01/01/2023",
+    "comment": "Great product! Exceeded my expectations. Great product! Exceeded my expectations. Great product! Exceeded my expectations. Great product! Exceeded my expectations. Great product! Exceeded my expectations.Great product! Exceeded my expectations.",
+    "rating": 5,
+    "liked": 25,
+    "shared": 5,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/1"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/1"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/1"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "userAvatar": "https://i.pravatar.cc/150?img=2",
+    "username": "Bob Smith",
+    "purchaseDate": "01/02/2023",
+    "reviewDate": "01/02/2023",
+    "comment": "Not bad, but could use some improvements.",
+    "rating": 3,
+    "liked": 12,
+    "shared": 2,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/2"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/2"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/2"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "userAvatar": "https://i.pravatar.cc/150?img=3",
+    "username": "Clara Lee",
+    "purchaseDate": "01/03/2023",
+    "reviewDate": "01/03/2023",
+    "comment": "I love it! Exactly what I was looking for.",
+    "rating": 4,
+    "liked": 35,
+    "shared": 10,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/3"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/3"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/3"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "userAvatar": "https://i.pravatar.cc/150?img=4",
+    "username": "Daniel Green",
+    "purchaseDate": "01/04/2023",
+    "reviewDate": "01/04/2023",
+    "comment": "Good quality, fast delivery, highly recommend!",
+    "rating": 5,
+    "liked": 40,
+    "shared": 12,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/4"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/4"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/4"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "userAvatar": "https://i.pravatar.cc/150?img=5",
+    "username": "Emma Brown",
+    "purchaseDate": "01/05/2023",
+    "reviewDate": "01/05/2023",
+    "comment": "Works as expected. Satisfied with my purchase.",
+    "rating": 4,
+    "liked": 30,
+    "shared": 8,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/5"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/5"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/5"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "userAvatar": "https://i.pravatar.cc/150?img=6",
+    "username": "Frank White",
+    "purchaseDate": "30/05/2024",
+    "reviewDate": "30/05/2024",
+    "comment": "Average product, decent value for money.",
+    "rating": 3,
+    "liked": 15,
+    "shared": 4,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/6"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/6"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/6"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "userAvatar": "https://i.pravatar.cc/150?img=1",
+    "username": "Alice Johnson",
+    "purchaseDate": "01/10/2024",
+    "reviewDate": "01/10/2024",
+    "comment": "Great product! Exceeded my expectations.",
+    "rating": 5,
+    "liked": 25,
+    "shared": 5,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/1"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/1"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/1"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "userAvatar": "https://i.pravatar.cc/150?img=2",
+    "username": "Bob Smith",
+    "purchaseDate": "01/08/2024",
+    "reviewDate": "01/08/2024",
+    "comment": "Not bad, but could use some improvements.",
+    "rating": 3,
+    "liked": 12,
+    "shared": 2,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/2"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/2"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/2"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "userAvatar": "https://i.pravatar.cc/150?img=3",
+    "username": "Clara Lee",
+    "purchaseDate": "15/08/2024",
+    "reviewDate": "15/08/2024",
+    "comment": "I love it! Exactly what I was looking for.",
+    "rating": 4,
+    "liked": 35,
+    "shared": 10,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/3"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/3"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/3"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "userAvatar": "https://i.pravatar.cc/150?img=4",
+    "username": "Daniel Green",
+    "purchaseDate": "10/07/2024",
+    "reviewDate": "10/07/2024",
+    "comment": "Good quality, fast delivery, highly recommend!",
+    "rating": 5,
+    "liked": 40,
+    "shared": 12,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/4"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/4"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/4"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "userAvatar": "https://i.pravatar.cc/150?img=5",
+    "username": "Emma Brown",
+    "purchaseDate": "20/07/2024",
+    "reviewDate": "20/07/2024",
+    "comment": "Works as expected. Satisfied with my purchase.",
+    "rating": 4,
+    "liked": 30,
+    "shared": 8,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/5"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/5"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/5"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "userAvatar": "https://i.pravatar.cc/150?img=6",
+    "username": "Frank White",
+    "purchaseDate": "30/05/2024",
+    "reviewDate": "30/05/2024",
+    "comment": "Average product, decent value for money.",
+    "rating": 3,
+    "liked": 15,
+    "shared": 4,
+    "shareLinks": [
+      {
+        "platform": "Facebook",
+        "url": "https://www.facebook.com/sharer/sharer.php?u=https://example.com/review/6"
+      },
+      {
+        "platform": "Twitter",
+        "url": "https://twitter.com/intent/tweet?text=Check+out+this+review&url=https://example.com/review/6"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://www.linkedin.com/sharing/share-offsite/?url=https://example.com/review/6"
+      }
+    ]
+  }
+]
