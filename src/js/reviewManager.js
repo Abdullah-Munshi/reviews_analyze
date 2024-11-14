@@ -141,6 +141,12 @@ export class ReviewManager {
       const reviewElement = this.createReviewElement(review);
       this.container.appendChild(reviewElement);
     });
+
+    // Scroll to the review-container (parent) so filters/sort are also visible
+    const containerToScroll = this.container.parentElement; // Assuming review-area is inside review-container
+    if (this.enablePagination && containerToScroll) {
+      containerToScroll.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   updatePagination() {
