@@ -2,7 +2,11 @@
 
 import TomSelect from "tom-select";
 import { fetchReviews } from "./dataService.js";
-import { timeAgo } from "./utils.js";
+import {
+  timeAgo,
+  updateActiveSortButton,
+  generateStarRating,
+} from "./utils.js";
 
 export class ReviewManager {
   constructor(
@@ -39,46 +43,73 @@ export class ReviewManager {
   }
 
   setupControls() {
-    // Select elements for sorting and filtering
-    const dateSortSelect = this.controls.querySelector("select:nth-of-type(1)");
-    const ratingFilterSelect = this.controls.querySelector(
-      "select:nth-of-type(2)"
-    );
+    if (this.container.id === "rv-widget-container") {
+      // Off-canvas widget area: Use buttons for sorting
+      const sortNewestButton = this.controls.querySelector("#sort-newest");
+      const sortOldestButton = this.controls.querySelector("#sort-oldest");
+      const ratingFilterSelect = this.controls.querySelector("select");
 
-    // Set dropdowns to default values
-    dateSortSelect.value = this.currentSortOrder;
-    ratingFilterSelect.value = this.currentRatingFilter;
+      sortNewestButton.addEventListener("click", () => {
+        this.currentSortOrder = "desc"; // Newest first
+        this.applySortAndFilter();
+        updateActiveSortButton(sortNewestButton, sortOldestButton);
+      });
 
-    // Initialize Tom Select on both dropdowns
-    new TomSelect(dateSortSelect, {
-      create: false,
-      sortField: { field: "text", direction: "asc" },
-      maxOptions: 5,
-    });
+      sortOldestButton.addEventListener("click", () => {
+        this.currentSortOrder = "asc"; // Oldest first
+        this.applySortAndFilter();
+        updateActiveSortButton(sortOldestButton, sortNewestButton);
+      });
 
-    new TomSelect(ratingFilterSelect, {
-      create: false,
-      sortField: { field: "text", direction: "asc" },
-      maxOptions: 5,
-    });
+      // Filtering with select dropdown
+      ratingFilterSelect.addEventListener("change", (event) => {
+        this.currentRatingFilter = event.target.value;
+        this.applySortAndFilter();
+      });
+    } else {
+      // Select elements for sorting and filtering
+      const dateSortSelect = this.controls.querySelector(
+        "select:nth-of-type(1)"
+      );
+      const ratingFilterSelect = this.controls.querySelector(
+        "select:nth-of-type(2)"
+      );
 
-    // Sorting by Date
-    dateSortSelect.addEventListener("change", (event) => {
-      this.currentSortOrder = event.target.value;
-      this.applySortAndFilter();
-    });
+      // Set dropdowns to default values
+      dateSortSelect.value = this.currentSortOrder;
+      ratingFilterSelect.value = this.currentRatingFilter;
 
-    // Filtering by Rating
-    ratingFilterSelect.addEventListener("change", (event) => {
-      this.currentRatingFilter = event.target.value;
-      this.applySortAndFilter();
-    });
+      // Initialize Tom Select on both dropdowns
+      new TomSelect(dateSortSelect, {
+        create: false,
+        sortField: { field: "text", direction: "asc" },
+        maxOptions: 5,
+      });
 
-    // Set the default selected value to "desc" on load
-    dateSortSelect.value = "desc";
+      new TomSelect(ratingFilterSelect, {
+        create: false,
+        sortField: { field: "text", direction: "asc" },
+        maxOptions: 5,
+      });
 
-    if (this.enablePagination) {
-      this.updatePagination(); // Only for review-area
+      // Sorting by Date
+      dateSortSelect.addEventListener("change", (event) => {
+        this.currentSortOrder = event.target.value;
+        this.applySortAndFilter();
+      });
+
+      // Filtering by Rating
+      ratingFilterSelect.addEventListener("change", (event) => {
+        this.currentRatingFilter = event.target.value;
+        this.applySortAndFilter();
+      });
+
+      // Set the default selected value to "desc" on load
+      dateSortSelect.value = "desc";
+
+      if (this.enablePagination) {
+        this.updatePagination(); // Only for review-area
+      }
     }
   }
 
@@ -187,7 +218,7 @@ export class ReviewManager {
       <h4>${review.username}</h4>
       <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
       <p>Date : ${review.purchaseDate}</p>
-      <p>Rating: ${review.rating}</p>
+      <p>Rating: ${generateStarRating(review.rating)}</p>
       <p class="review-comment">${displayedComment}</p>
       <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
       ${
@@ -211,7 +242,7 @@ export class ReviewManager {
       <h4>${review.username}</h4>
       <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
       <p>Date : ${review.purchaseDate}</p>
-      <p>Rating: ${review.rating}</p>
+      <p>Rating: ${generateStarRating(review.rating)}</p>
       <p class="review-comment">${displayedComment}</p>
       <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
       ${
@@ -260,5 +291,66 @@ export class ReviewManager {
       );
     }
     return comment;
+  }
+
+  //   calcualte average rating
+  calculateRatingStats() {
+    console.log(this.reviews);
+    const totalReviews = this.reviews.length;
+    if (totalReviews === 0) {
+      return {
+        avgRating: "0",
+        ratingCounts: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+        totalReviews: 0,
+      };
+    }
+
+    let totalRating = 0;
+    const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+
+    this.reviews.forEach((review) => {
+      totalRating += review.rating;
+      ratingCounts[review.rating] += 1;
+    });
+
+    const avgRating = (totalRating / totalReviews).toFixed(1); // Calculate average rating
+
+    return { avgRating, ratingCounts, totalReviews };
+  }
+
+  renderRatingStats() {
+    const { avgRating, ratingCounts, totalReviews } =
+      this.calculateRatingStats();
+
+    // Average rating display
+    const avgRatingDisplay = `
+      <div class="avg-rating">
+        <h3>Average Rating: ${avgRating} / 5</h3>
+        <div class="avg-stars">${generateStarRating(
+          Math.round(avgRating)
+        )}</div>
+      </div>
+    `;
+
+    // Rating bars for each star level
+    const ratingBars = Object.entries(ratingCounts)
+      .sort((a, b) => b[0] - a[0]) // Sort by star level in descending order (5 to 1)
+      .map(([star, count]) => {
+        const percentage = ((count / totalReviews) * 100).toFixed(1); // Percentage of reviews for this rating
+        return `
+        <div class="rating-bar">
+          <span>${star} Star</span>
+          <div class="bar">
+            <div class="fill" style="width: ${percentage}%"></div>
+          </div>
+          <span>${count}</span>
+        </div>
+      `;
+      })
+      .join("");
+
+    // Insert into widget area
+    const widgetArea = document.getElementById("rv-widget-avg");
+    widgetArea.innerHTML = avgRatingDisplay + ratingBars;
   }
 }

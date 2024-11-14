@@ -15,13 +15,17 @@ export class OffCanvasController {
 
   show() {
     this.offCanvas.classList.add("show");
+    this.openButton.style.display = "none";
     if (!this.hasLoaded) {
-      this.reviewManagerInstance.init(); // Lazy-load data only when opened
-      this.hasLoaded = true;
+      this.reviewManagerInstance.init().then(() => {
+        this.reviewManagerInstance.renderRatingStats();
+        this.hasLoaded = true;
+      }); // Lazy-load data only when opened
     }
   }
 
   hide() {
     this.offCanvas.classList.remove("show");
+    this.openButton.style.display = "block";
   }
 }

@@ -20,3 +20,15 @@ export function timeAgo(purchaseDate) {
     return `${minutesAgo} minute${minutesAgo > 1 ? "s" : ""} ago`;
   return `${secondsAgo} second${secondsAgo > 1 ? "s" : ""} ago`;
 }
+
+export function updateActiveSortButton(activeButton, inactiveButton) {
+  activeButton.classList.add("active");
+  inactiveButton.classList.remove("active");
+}
+
+export function generateStarRating(rating) {
+  // Generate filled stars based on rating and remaining as empty stars
+  const filledStars = '<span class="star filled">★</span>'.repeat(rating);
+  const emptyStars = '<span class="star">☆</span>'.repeat(5 - rating);
+  return filledStars + emptyStars;
+}

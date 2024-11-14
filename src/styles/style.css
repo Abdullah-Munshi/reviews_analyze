@@ -33,3 +33,68 @@
 .page-button.active {
   background: red;
 }
+
+.avg-rating {
+  margin-bottom: 20px;
+}
+
+.avg-rating h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.avg-stars {
+  font-size: 20px;
+  color: #ffd700; /* Yellow stars for average rating */
+}
+
+.rating-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating-bar span {
+  width: 50px;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  background: #e0e0e0; /* Light gray for background bar */
+  margin: 0 10px;
+  border-radius: 4px;
+}
+
+.fill {
+  height: 100%;
+  background-color: #ffd700; /* Yellow fill for rating bar */
+  border-radius: 4px;
+}
+
+.star {
+  font-size: 20px;
+  color: #ccc; /* Default color for empty stars */
+  margin-right: 2px;
+  display: inline-block;
+  position: relative;
+}
+
+.star.filled {
+  color: #ffd700; /* Full yellow for filled stars */
+}
+
+.star.partial {
+  position: relative;
+  color: #ccc; /* Default to empty star color */
+  overflow: hidden;
+}
+
+.star.partial .fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ffd700; /* Yellow fill color */
+  overflow: hidden;
+  width: 0; /* Will be set dynamically */
+}
