@@ -99,8 +99,8 @@ export class ReviewManager {
       });
       new TomSelect(ratingFilterSelect, {
         create: false,
-        sortField: { field: "text" },
-        maxOptions: 5,
+        sortField: { field: "text", direction: "desc" },
+        maxOptions: 6,
       });
 
       // Filtering with select dropdown
@@ -124,14 +124,14 @@ export class ReviewManager {
       // Initialize Tom Select on both dropdowns
       new TomSelect(dateSortSelect, {
         create: false,
-        sortField: { field: "text", direction: "asc" },
-        maxOptions: 5,
+        sortField: { field: "text", direction: "desc" },
+        maxOptions: 6,
       });
 
       new TomSelect(ratingFilterSelect, {
         create: false,
-        sortField: { field: "text", direction: "asc" },
-        maxOptions: 5,
+        sortField: { field: "text", direction: "desc" },
+        maxOptions: 6,
       });
 
       // Sorting by Date

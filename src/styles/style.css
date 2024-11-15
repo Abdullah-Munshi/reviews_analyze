@@ -3897,6 +3897,15 @@ data-styled.g410[id="sc-59180a97-11"] {
 }
 .ts-wrapper.style-2.single .ts-control {
   height: auto;
+  font-size: 13px;
+  width: 112px;
+}
+.ts-wrapper.style-2.single .ts-dropdown .option {
+  font-size: 12px;
+  padding: 7px 16px;
+}
+.ts-wrapper.style-2.single .ts-control > input {
+  min-width: auto;
 }
 /* main css end */
 
