@@ -3593,6 +3593,7 @@ data-styled.g410[id="sc-59180a97-11"] {
   padding: 20px 16px;
   display: grid;
   padding-bottom: 5px;
+  min-height: 121px;
 }
 .trusted-logo img {
   max-width: 100%;
@@ -3886,6 +3887,9 @@ data-styled.g410[id="sc-59180a97-11"] {
 .avg-rating {
   margin-bottom: 15px;
   display: flex;
+}
+.avg-rating .avg-stars img {
+  width: 20px;
 }
 .rating-bar-wrap .rating-bar:not(:last-child) {
   margin-bottom: 10px;

@@ -11,7 +11,7 @@ import {
 import shareIcon from "../assets/icons/share.svg";
 import likeIcon from "../assets/icons/like.svg";
 import likeFilledIcon from "../assets/icons/likeFilled.svg";
-import share2FilledIcon from "../assets/icons/share2Filled.svg";
+import starFilled from "../assets/icons/starFilled.svg";
 import caretDownIcon from "../assets/icons/caretDown.svg";
 
 export class ReviewManager {
@@ -419,7 +419,13 @@ export class ReviewManager {
     const avgRatingDisplay = `
     <div class="avg-rating">
       
-      <div class="avg-stars">${generateStarRating(Math.round(avgRating))}</div>
+      <div class="avg-stars">
+        <img src="${starFilled}" alt="*" />
+        <img src="${starFilled}" alt="*" />
+        <img src="${starFilled}" alt="*" />
+        <img src="${starFilled}" alt="*" />
+        <img src="${starFilled}" alt="*" />
+      </div>
       <div class="avg-dropdwon">
           <button class="trigger">
             <span><strong class="f-rate">${avgRating}</strong>/5</span><img src="${caretDownIcon}" alt="" />
