@@ -6,13 +6,15 @@ import {
   timeAgo,
   updateActiveSortButton,
   generateStarRating,
+  getReviewsLastYear,
 } from "./utils.js";
 
 import shareIcon from "../assets/icons/share.svg";
 import likeIcon from "../assets/icons/like.svg";
-import likeFilledIcon from "../assets/icons/likeFilled.svg";
+import starFilled2 from "../assets/icons/starFilled2.svg";
 import starFilled from "../assets/icons/starFilled.svg";
 import caretDownIcon from "../assets/icons/caretDown.svg";
+import starGrayIcon from "../assets/icons/starGray.svg";
 
 export class ReviewManager {
   constructor(
@@ -394,7 +396,7 @@ export class ReviewManager {
     return { avgRating, ratingCounts, totalReviews };
   }
 
-  renderRatingStats() {
+  renderRatingWidgetStats() {
     const { avgRating, ratingCounts, totalReviews } =
       this.calculateRatingStats();
 
@@ -438,5 +440,62 @@ export class ReviewManager {
     // Insert into widget area
     const rvWidgetAvg = document.getElementById("rv-widget-avg");
     rvWidgetAvg.innerHTML = avgRatingDisplay;
+  }
+
+  renderRatingPageStats() {
+    // Calculate stats
+    const { avgRating, ratingCounts, totalReviews } =
+      this.calculateRatingStats();
+
+    const reviewsLastYearCount = getReviewsLastYear(this.reviews);
+
+    // Generate the filled star rating
+    const starFilledIcon = "./src/assets/icons/starFilled2.svg";
+    const starUnfilledIcon = "./src/assets/icons/starUnfilled.svg";
+
+    // Generate rating bars
+    const barsHtml = Object.entries(ratingCounts)
+      .sort((a, b) => b[0] - a[0]) // Sort by star level descending
+      .map(([star, count]) => {
+        const percentage = ((count / totalReviews) * 100).toFixed(1);
+        return `
+          <div class="rating-bar">
+            <span class="one">${star} <img src="${starGrayIcon}" alt="Star" /></span>
+            <div class="bar">
+              <div class="fill" style="width: ${percentage}%"></div>
+            </div>
+            <span class="two">${count}</span>
+          </div>
+        `;
+      })
+      .join("");
+
+    // Combine the full HTML
+    const summaryHtml = `
+      <div class="rt-stars-value">
+         <div class="rt-stars">
+            <span><img src="${starFilled2}" alt="*" /></span>
+            <span><img src="${starFilled2}" alt="*" /></span>
+            <span><img src="${starFilled2}" alt="*" /></span>
+            <span><img src="${starFilled2}" alt="*" /></span>
+            <span><img src="${starFilled2}" alt="*" /></span>
+          </div>
+        <span class="rt-value"><strong>${avgRating}</strong>/5</span>
+      </div>
+      <div class="rt-bar-wrap">
+        ${barsHtml}
+      </div>
+      <p class="note">
+        <strong>${reviewsLastYearCount}</strong> ratings over the past year
+      </p>
+    `;
+
+    // Insert into a target container
+    const avgRtDisplay = document.getElementById("avg-rt-display");
+    if (avgRtDisplay) {
+      avgRtDisplay.innerHTML = summaryHtml;
+    } else {
+      console.warn("No container found for rating summary.");
+    }
   }
 }

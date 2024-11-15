@@ -25,7 +25,7 @@ export class OffCanvasController {
     this.openButton.style.display = "none";
     if (!this.hasLoaded) {
       this.reviewManagerInstance.init().then(() => {
-        this.reviewManagerInstance.renderRatingStats();
+        this.reviewManagerInstance.renderRatingWidgetStats();
         this.hasLoaded = true;
       }); // Lazy-load data only when opened
     }

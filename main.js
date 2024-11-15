@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     false
   );
   // render reviews in page
-  rvPageManager.init();
+  rvPageManager.init().then(() => {
+    rvPageManager.renderRatingPageStats();
+  });
 
   const rvWidgetManager = new ReviewManager(
     "rv-widget-container",

@@ -136,3 +136,18 @@ export const readMore = (maxChars = 120) => {
     });
   });
 };
+
+export function getReviewsLastYear(reviews) {
+  const currentDate = new Date();
+  const oneYearAgo = new Date();
+  oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+
+  // Filter reviews based on purchaseDate
+  const reviewsLastYear = reviews.filter((review) => {
+    const [day, month, year] = review.purchaseDate.split("/").map(Number);
+    const reviewDate = new Date(year, month - 1, day);
+    return reviewDate >= oneYearAgo; // Reviews within the last year
+  });
+
+  return reviewsLastYear.length; // Return the count of reviews in the past year
+}
