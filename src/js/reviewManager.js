@@ -8,10 +8,16 @@ import {
   generateStarRating,
 } from "./utils.js";
 
+import shareIcon from "../assets/icons/share.svg";
+import likeIcon from "../assets/icons/like.svg";
+import likeFilledIcon from "../assets/icons/likeFilled.svg";
+import share2FilledIcon from "../assets/icons/share2Filled.svg";
+
 export class ReviewManager {
   constructor(
     containerId,
     controlsId,
+    itemsPerPage = 10,
     enablePagination = false,
     compactLayout = false
   ) {
@@ -31,7 +37,7 @@ export class ReviewManager {
     this.currentSortOrder = "desc"; // Default to 'desc' for most recent
     this.currentRatingFilter = "all";
     this.currentPage = 1;
-    this.itemsPerPage = 2;
+    this.itemsPerPage = itemsPerPage;
   }
 
   async init() {
@@ -59,6 +65,11 @@ export class ReviewManager {
         this.currentSortOrder = "asc"; // Oldest first
         this.applySortAndFilter();
         updateActiveSortButton(sortOldestButton, sortNewestButton);
+      });
+      new TomSelect(ratingFilterSelect, {
+        create: false,
+        sortField: { field: "text" },
+        maxOptions: 5,
       });
 
       // Filtering with select dropdown
@@ -172,12 +183,6 @@ export class ReviewManager {
       const reviewElement = this.createReviewElement(review);
       this.container.appendChild(reviewElement);
     });
-
-    // Scroll to the review-container (parent) so filters/sort are also visible
-    const containerToScroll = this.container.parentElement; // Assuming review-area is inside review-container
-    if (this.enablePagination && containerToScroll) {
-      containerToScroll.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
   }
 
   updatePagination() {
@@ -198,6 +203,14 @@ export class ReviewManager {
         this.currentPage = i;
         this.renderReviews();
         this.updatePagination();
+        // Scroll to the review-container (parent) so filters/sort are also visible
+        const containerToScroll = this.container.parentElement; // Assuming review-area is inside review-container
+        if (this.enablePagination && containerToScroll) {
+          containerToScroll.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
       });
 
       this.paginationContainer.appendChild(pageButton);
@@ -214,66 +227,106 @@ export class ReviewManager {
       : review.comment;
 
     if (this.compactLayout) {
-      reviewEl.innerHTML = `
-      <h4>${review.username}</h4>
-      <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
-      <p>Date : ${review.purchaseDate}</p>
-      <p>Rating: ${generateStarRating(review.rating)}</p>
-      <p class="review-comment">${displayedComment}</p>
-      <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
+      reviewEl.innerHTML = `<div class="single-rv style-2" >
+    <div class="rv-middle">
+      <div class="rating-star">${generateStarRating(review.rating)}</div>
+      <div class="name-date">
+      <strong>${review.username}</strong>-<span>review.purchaseDate</span> 
+      </div>
+      <p class="rv-comment">${displayedComment}</p>
+     
       ${
         isLongComment
-          ? `
-        <span class="toggle-more">
-          Show more
-            <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 16.5L6 10.5H18L12 16.5Z" fill="currentColor"/>
-            </svg>
-         
-        </span>`
+          ? `<a href="#" class="read-more">Read More 
+              <svg class="angle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18" id="angle-down">
+                <path fill="#292F36" d="M2.977 6.352a.563.563 0 0 1 .796 0L9 11.58l5.227-5.228a.563.563 0 0 1 .796.796l-5.625 5.625a.56.56 0 0 1-.796 0L2.977 7.148a.56.56 0 0 1 0-.796"/>
+              </svg>
+             </a>`
           : ""
       }
-    `;
+      
+    </div>
+    <div class="rv-bottom">
+      <button class="btn_style2 like-btn"><img class="mr-10" src="${likeFilledIcon}" alt="L" /><span>${
+        review.liked
+      }</span></button>
+      <div class="dropdown-widget" data-arrow="false" data-show-up="true">
+        <button class="btn_style2 dropdown-btn"><img class="ml-10" src="${share2FilledIcon}" alt="S" />Share</button>
+        <div class="dropdown-content">
+          ${review.shareLinks
+            .map(
+              (link) =>
+                `<a href="${link.url}" target="_blank" class="dropdown-option">${link.platform}</a>`
+            )
+            .join("")}
+        </div>
+      </div>
+    </div>
+  </div>`;
     } else {
-      reviewEl.innerHTML = `
-      <img src="${review.userAvatar}" alt="${
-        review.username
-      }" class="review-avatar" />
-      <h4>${review.username}</h4>
-      <p class="time-ago">${timeAgo(review.purchaseDate)}</p>
-      <p>Date : ${review.purchaseDate}</p>
-      <p>Rating: ${generateStarRating(review.rating)}</p>
-      <p class="review-comment">${displayedComment}</p>
-      <p>Likes: ${review.liked} | Shared: ${review.shared}</p>
+      reviewEl.innerHTML = `<div class="single-rv" >
+    <div class="rv-top">
+      <div class="user-part">
+        <div class="user-avatar"><img src="${
+          review.userAvatar
+        }" alt="AV" /></div>
+        <div class="user-name">
+          <h6>${review.username}</h6>
+          <span class="feedback-date">${timeAgo(review.purchaseDate)}</span>
+        </div>
+      </div>
+      <div class="purchase-date"><p>Date of purchase: ${
+        review.purchaseDate
+      }</p></div>
+    </div>
+    <div class="rv-middle">
+      <div class="rating-star">${generateStarRating(review.rating)}</div>
+      <span class="hr-bar"></span>
+      <p class="rv-comment">${displayedComment}</p>
       ${
         isLongComment
-          ? `
-        <span class="toggle-more">
-          Show more
-            <svg class="arrow-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 16.5L6 10.5H18L12 16.5Z" fill="currentColor"/>
-            </svg>
-         
-        </span>`
+          ? `<a href="#" class="read-more">Read More 
+              <svg class="angle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18" id="angle-down">
+                <path fill="#292F36" d="M2.977 6.352a.563.563 0 0 1 .796 0L9 11.58l5.227-5.228a.563.563 0 0 1 .796.796l-5.625 5.625a.56.56 0 0 1-.796 0L2.977 7.148a.56.56 0 0 1 0-.796"/>
+              </svg>
+             </a>`
           : ""
       }
-    `;
+    </div>
+    <div class="rv-bottom">
+      <button class="btn_outline like-btn"><img class="mr-10" src="${likeIcon}" alt="L" /><span>${
+        review.liked
+      }</span></button>
+      <div class="dropdown-widget" data-arrow="false" data-show-up="true">
+        <button class="btn_outline dropdown-btn">Share <img class="ml-10" src="${shareIcon}" alt="S" /></button>
+        <div class="dropdown-content">
+          ${review.shareLinks
+            .map(
+              (link) =>
+                `<a href="${link.url}" target="_blank" class="dropdown-option">${link.platform}</a>`
+            )
+            .join("")}
+        </div>
+      </div>
+    </div>
+  </div>`;
     }
 
     if (isLongComment) {
-      const toggleButton = reviewEl.querySelector(".toggle-more");
-      const arrowIcon = toggleButton.querySelector(".arrow-icon");
+      const toggleButton = reviewEl.querySelector(".read-more");
+      const arrowIcon = toggleButton.querySelector(".angle-icon");
       arrowIcon.style.display = "inline-block";
-      toggleButton.addEventListener("click", () => {
-        const commentEl = reviewEl.querySelector(".review-comment");
-        if (toggleButton.innerText.includes("Show more")) {
+      toggleButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const commentEl = reviewEl.querySelector(".rv-comment");
+        if (toggleButton.innerText.includes("Read More")) {
           commentEl.innerText = review.comment;
-          toggleButton.innerHTML = "Show less";
+          toggleButton.innerHTML = "Read less";
           toggleButton.appendChild(arrowIcon);
           arrowIcon.style.transform = "rotate(180deg)"; // Rotate arrow down for "Show less"
         } else {
           commentEl.innerText = displayedComment;
-          toggleButton.innerHTML = "Show more";
+          toggleButton.innerHTML = "Read More";
           toggleButton.appendChild(arrowIcon);
           arrowIcon.style.transform = "rotate(0deg)"; // Reset rotation for "Show more"
         }
@@ -322,16 +375,6 @@ export class ReviewManager {
     const { avgRating, ratingCounts, totalReviews } =
       this.calculateRatingStats();
 
-    // Average rating display
-    const avgRatingDisplay = `
-      <div class="avg-rating">
-        <h3>Average Rating: ${avgRating} / 5</h3>
-        <div class="avg-stars">${generateStarRating(
-          Math.round(avgRating)
-        )}</div>
-      </div>
-    `;
-
     // Rating bars for each star level
     const ratingBars = Object.entries(ratingCounts)
       .sort((a, b) => b[0] - a[0]) // Sort by star level in descending order (5 to 1)
@@ -349,8 +392,22 @@ export class ReviewManager {
       })
       .join("");
 
+    // Average rating display
+    const avgRatingDisplay = `
+    <div class="avg-rating">
+      
+      <div class="avg-stars">${generateStarRating(Math.round(avgRating))}</div>
+      <div class="avg-dropdwon">
+          <button class="trigger">
+            <span>${avgRating}</span><img src="./images/caretDown.svg" alt="" />
+          </button>
+          ${ratingBars}
+      </div>
+    </div>
+  `;
+
     // Insert into widget area
-    const widgetArea = document.getElementById("rv-widget-avg");
-    widgetArea.innerHTML = avgRatingDisplay + ratingBars;
+    const rvWidgetAvg = document.getElementById("rv-widget-avg");
+    rvWidgetAvg.innerHTML = avgRatingDisplay;
   }
 }

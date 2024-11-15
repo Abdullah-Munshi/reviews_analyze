@@ -1,3 +1,6 @@
+import starFilled from "../assets/icons/starFilled.svg";
+import starUnFilled from "../assets/icons/starUnFilled.svg";
+
 // Helper function to calculate "time ago" text
 export function timeAgo(purchaseDate) {
   // Parse the "DD/MM/YYYY" format
@@ -28,7 +31,7 @@ export function updateActiveSortButton(activeButton, inactiveButton) {
 
 export function generateStarRating(rating) {
   // Generate filled stars based on rating and remaining as empty stars
-  const filledStars = '<span class="star filled">★</span>'.repeat(rating);
-  const emptyStars = '<span class="star">☆</span>'.repeat(5 - rating);
+  const filledStars = `<img src="${starFilled}" alt="★" />`.repeat(rating);
+  const emptyStars = `<img src="${starFilled}" alt="☆" />`.repeat(5 - rating);
   return filledStars + emptyStars;
 }
