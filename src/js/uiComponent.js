@@ -33,7 +33,7 @@ export class OffCanvasController {
 
   hide() {
     this.offCanvas.classList.remove("show");
-    this.openButton.style.display = "block";
+    this.openButton.style.display = "flex";
   }
 }
 
