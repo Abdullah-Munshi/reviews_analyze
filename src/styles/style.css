@@ -241,6 +241,9 @@ data-styled.g2[id="sc-global-BEOXp1"] {
     padding-left: 3.125rem;
     padding-right: 3.125rem;
   }
+  .ft-mobile-accordion {
+    display: none;
+  }
 }
 data-styled.g3[id="Grid-feefo-ui__sc-1j1e3zr-0"] {
   content: "esUEAE,";
@@ -3383,81 +3386,7 @@ data-styled.g410[id="sc-59180a97-11"] {
   margin-top: 10px;
   display: inline-block;
 }
-.accordion-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
 
-.accordion-item {
-  border: 0;
-  border-radius: 0;
-  margin-bottom: 0;
-  overflow: hidden;
-}
-.accordion-header {
-  cursor: pointer;
-  background: none;
-  border: none;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px 0;
-  transition: background-color 0.2s;
-  display: flex;
-}
-.accordion-title {
-  color: #292f36;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: Aeonik Regular, Helvetica Neue Regular, Roboto Regular, Arial,
-    sans-serif;
-}
-.expanded .accordion-title,
-.expanded .accordion-title:hover {
-  color: rgb(11, 6, 249);
-}
-.accordion-title:hover {
-  color: rgb(74, 80, 87);
-}
-.accordion-title:hover {
-  color: rgb(74, 80, 87);
-}
-.accordion-icon {
-  transition: transform 0.2s ease;
-}
-
-.accordion-header[aria-expanded="true"] .accordion-icon {
-  transform: rotate(180deg);
-}
-
-.accordion-content {
-  height: 0;
-  overflow: hidden;
-  transition: height 0.3s ease-out;
-}
-.accordion-body {
-  color: #4a5568;
-  background-color: #0000;
-  background-image: linear-gradient(to left, #fff, #0b06f9);
-  background-position: left 0 bottom 0, left 0 bottom 0.5125rem;
-  background-repeat: no-repeat;
-  background-size: 100% 0.0625rem;
-  background-attachment: scroll;
-  background-origin: padding-box;
-  background-clip: border-box;
-  line-height: 1.25;
-  font-size: 14px;
-  padding-bottom: 15px;
-}
-.accordion-container .arrow {
-  transition: 0.3s;
-}
-.expanded .arrow {
-  transform: rotateZ(-180deg);
-}
 .StyledLinkTextContainer-feefo-ui__sc-a2xigi-1.eiOCzP.px-6 {
   margin: 0 24px;
   padding: 2px 0;
@@ -4041,3 +3970,93 @@ data-styled.g410[id="sc-59180a97-11"] {
   background-color: rgb(11, 6, 249);
 }
 /* footer css end */
+
+/* accordion css start */
+.ft-mobile-accordion {
+  margin-top: 40px;
+}
+.faq-accordion {
+  padding: 0 24px;
+}
+
+.accordion-button {
+  width: 100%;
+  border: none;
+  padding: 10px 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  background: transparent;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-family: Aeonik Regular, Helvetica Neue Regular, Roboto Regular, Arial,
+    sans-serif;
+}
+.accordion-content {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease; /* Smooth transition for height */
+}
+
+.accordion-icon {
+  transition: transform 0.3s ease;
+}
+.ft-mobile-accordion .accordion-button .arrow path {
+  fill: #fff;
+}
+.accordion-button[aria-expanded="true"] .accordion-icon svg {
+  transform: rotate(180deg);
+}
+.inner ul li {
+  display: block;
+}
+.inner ul li:not(:last-child) {
+  margin-bottom: 14px;
+}
+.inner ul li a {
+  display: inline-block;
+  font-size: 14px;
+}
+.accordion-content .inner {
+  padding: 10px 0;
+}
+
+.faq-accordion .accordion-button {
+  color: #292f36;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Aeonik Regular, Helvetica Neue Regular, Roboto Regular, Arial,
+    sans-serif;
+}
+.faq-accordion .accordion-button[aria-expanded="true"],
+.faq-accordion .accordion-button[aria-expanded="true"]:hover {
+  color: rgb(11, 6, 249);
+}
+.faq-accordion .accordion-button:hover {
+  color: rgb(74, 80, 87);
+}
+
+.accordion-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+.faq-accordion .accordion-content .inner {
+  color: #4a5568;
+  background-color: #0000;
+  background-image: linear-gradient(to left, #fff, #0b06f9);
+  background-position: left 0 bottom 0, left 0 bottom 0.5125rem;
+  background-repeat: no-repeat;
+  background-size: 100% 0.0625rem;
+  background-attachment: scroll;
+  background-origin: padding-box;
+  background-clip: border-box;
+  line-height: 1.25;
+  font-size: 14px;
+  padding-bottom: 15px;
+}
+/* accordion css end */
