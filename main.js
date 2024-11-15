@@ -1,7 +1,8 @@
 import "./src/styles/style.css";
 
 import { ReviewManager } from "./src/js/reviewManager";
-import { Accordion, OffCanvasController } from "./src/js/uiComponent";
+import { Accordion, OffCanvasController, Tab } from "./src/js/uiComponent";
+import { readMore } from "./src/js/utils";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const rvPageManager = new ReviewManager(
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     true,
     false
   );
+  // render reviews in page
   rvPageManager.init();
 
   const rvWidgetManager = new ReviewManager(
@@ -20,11 +22,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     false,
     true
   );
+
+  // create tab instance
+  const tab = new Tab("tabs");
+
+  // create offcanvas widget instance
   const offCanvasController = new OffCanvasController(
     "offcanvas-widget",
     "open-widget-button",
     "close-widget-button",
-    rvWidgetManager
+    rvWidgetManager,
+    tab
   );
 
   const accordionData = [
@@ -49,9 +57,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         "We verify that reviews are from genuine customers by matching them to a sale or transaction. People are only invited to leave a review after purchasing from the business.",
     },
   ];
+
+  // create accordion instance
   const faq = new Accordion({
     containerId: "faq",
     data: accordionData,
     allowMultiple: false, // Set to true if you want multiple panels open at once
   });
+
+  // readmore function for anywhere in the page
+  readMore();
 });

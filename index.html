@@ -56,7 +56,7 @@
           <img src="./src/assets/trusted-logo.svg" alt="" />
         </div>
       </div>
-      <div class="tabs">
+      <div id="tabs" class="tabs">
         <div class="tab-header">
           <button class="tab-button active" data-tab="reviews">
             Reviews
@@ -67,34 +67,32 @@
             <span class="count">(0)</span>
           </button>
         </div>
+        <div class="tab-content">
+          <div id="tab-reviews" class="tab-pane active">
+            <div id="rv-widget-control" class="rv-widget-control">
+              <div class="control-buttons">
+                <button id="sort-newest" class="sort-button active">
+                  Newest
+                </button>
+                <button id="sort-oldest" class="sort-button">Oldest</button>
+              </div>
 
-        <div class="tab-content active">
-          <div id="rv-widget-control" class="rv-widget-control">
-            <div class="control-buttons">
-              <button id="sort-newest" class="sort-button active">
-                Newest
-              </button>
-              <button id="sort-oldest" class="sort-button">Oldest</button>
+              <select class="style-2" name="" id="">
+                <option value="all" selected>All Ratings</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+              </select>
             </div>
-
-            <select class="style-2" name="" id="">
-              <option value="all" selected>All Ratings</option>
-              <option value="5">5 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="3">3 Stars</option>
-              <option value="2">2 Stars</option>
-              <option value="1">1 Star</option>
-            </select>
+            <div id="rv-widget-container" class="rv-widget-container"></div>
           </div>
-          <div id="rv-widget-container" class="rv-widget-container"></div>
-        </div>
-
-        <div id="media" class="tab-content">
-          <div>No media items available</div>
-          <div class="placeholder">Media content would go here</div>
+          <div id="tab-media" class="tab-pane">
+            <div class="not-available">No content available</div>
+          </div>
         </div>
       </div>
-
       <div class="widget-footer">
         <a href="#" target="blank" class="cmn-link">Read all reviews</a>
       </div>
@@ -364,7 +362,7 @@
         </ol>
       </nav>
     </div>
-    <div flex_direction="row" background="#fff" class="sc-c0682874-1 dithHW">
+    <div class="sc-c0682874-1 dithHW">
       <div
         background="linear-gradient(0deg,#e2eaf4 4.5%,rgba(247, 242, 237, 0) 102.5%)"
         height="5.3125rem"
@@ -1111,7 +1109,7 @@
       </div>
     </div>
 
-    <div flex_direction="row" class="sc-c0682874-1 gbOJiq">
+    <div class="sc-c0682874-1 gbOJiq">
       <div class="sc-c0682874-3 kWoVOG">
         <div class="sc-c0682874-4 hrVwEk">
           <div class="sc-e24e8278-0 cfjgVu">
@@ -1199,7 +1197,23 @@
                 time.    We are proud to work with companies, large and small,
                 from household names to local heroes.
               </p>
-              <button class="button style-1 flEjGI">Read All</button>
+              <button class="button style-1 flEjGI">
+                <span>Read All</span>
+                <svg
+                  class="angle-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  viewBox="0 0 18 18"
+                  id="angle-down"
+                >
+                  <path
+                    fill="#292F36"
+                    d="M2.977 6.352a.563.563 0 0 1 .796 0L9 11.58l5.227-5.228a.563.563 0 0 1 .796.796l-5.625 5.625a.56.56 0 0 1-.796 0L2.977 7.148a.56.56 0 0 1 0-.796"
+                  />
+                </svg>
+              </button>
             </div>
 
             <div
@@ -1695,7 +1709,7 @@
         </a>
       </div>
     </div>
-    <div flex_direction="row" class="sc-c0682874-1 bFVTcH">
+    <div class="sc-c0682874-1 bFVTcH">
       <footer
         data-aqa-id="footer-container"
         class="Container-feefo-ui__sc-yockxs-0 eImsyb"

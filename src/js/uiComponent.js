@@ -1,11 +1,18 @@
 // uiComponent.js
 
 export class OffCanvasController {
-  constructor(offCanvasId, openButtonId, closeButtonId, reviewManagerInstance) {
+  constructor(
+    offCanvasId,
+    openButtonId,
+    closeButtonId,
+    reviewManagerInstance,
+    tabInstance
+  ) {
     this.offCanvas = document.getElementById(offCanvasId);
     this.openButton = document.getElementById(openButtonId);
     this.closeButton = document.getElementById(closeButtonId);
     this.reviewManagerInstance = reviewManagerInstance;
+    this.tabInstance = tabInstance;
     this.hasLoaded = false;
 
     // Bind events
@@ -144,5 +151,29 @@ export class Accordion {
     this.accordionData = newData;
     this.render();
     this.setupEventListeners();
+  }
+}
+
+export class Tab {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.tabButtons = this.container.querySelectorAll(".tab-button");
+    this.tabPanes = this.container.querySelectorAll(".tab-pane");
+    this.initTabs();
+  }
+
+  initTabs() {
+    this.tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        // Deactivate all buttons and panes
+        this.tabButtons.forEach((btn) => btn.classList.remove("active"));
+        this.tabPanes.forEach((pane) => pane.classList.remove("active"));
+
+        // Activate the clicked button and corresponding pane
+        button.classList.add("active");
+        const tabId = button.getAttribute("data-tab");
+        this.container.querySelector(`#tab-${tabId}`).classList.add("active");
+      });
+    });
   }
 }

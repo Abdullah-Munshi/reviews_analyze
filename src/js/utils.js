@@ -32,6 +32,107 @@ export function updateActiveSortButton(activeButton, inactiveButton) {
 export function generateStarRating(rating) {
   // Generate filled stars based on rating and remaining as empty stars
   const filledStars = `<img src="${starFilled}" alt="★" />`.repeat(rating);
-  const emptyStars = `<img src="${starFilled}" alt="☆" />`.repeat(5 - rating);
+  const emptyStars = `<img src="${starUnFilled}" alt="☆" />`.repeat(5 - rating);
   return filledStars + emptyStars;
 }
+
+export class Dropdown {
+  constructor(selector) {
+    this.widgets = document.querySelectorAll(selector);
+    this.init();
+  }
+
+  init() {
+    this.widgets.forEach((widget) => {
+      const button = widget.querySelector(".dropdown-btn");
+      const dropdown = widget.querySelector(".dropdown-content");
+
+      // Read attributes for direction and arrow visibility
+      const showUp = widget.getAttribute("data-show-up") === "true";
+      const showArrow = widget.getAttribute("data-arrow") !== "false";
+      const caret = button.querySelector(".caret");
+
+      // Default to dropdown direction and add caret if needed
+      dropdown.style.display = "none";
+      dropdown.classList.add(showUp ? "dropup-content" : "dropdown-content");
+      if (!caret && showArrow) {
+        // Add caret if it doesn't exist and showArrow is true
+        const newCaret = document.createElement("span");
+        newCaret.classList.add("caret");
+        newCaret.textContent = showUp ? "▲" : "▼";
+        button.appendChild(newCaret);
+      } else if (caret && !showArrow) {
+        // Remove caret if present and showArrow is false
+        caret.remove();
+      }
+
+      // Add click event to button
+      button.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevent event from bubbling to the document
+        this.toggleDropdown(dropdown, showUp);
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (event) => {
+        if (!widget.contains(event.target)) {
+          dropdown.style.display = "none";
+          if (caret) caret.textContent = showUp ? "▲" : "▼"; // Reset caret
+        }
+      });
+    });
+  }
+
+  toggleDropdown(dropdown, showUp) {
+    // Close other dropdowns if multiple instances are present
+    document
+      .querySelectorAll(".dropdown-content, .dropup-content")
+      .forEach((dd) => {
+        if (dd !== dropdown) dd.style.display = "none";
+      });
+
+    // Toggle the current dropdown
+    dropdown.style.display =
+      dropdown.style.display === "none" ? "block" : "none";
+  }
+}
+
+export const readMore = (maxChars = 120) => {
+  // You can adjust default maxChars
+  const paragraphs = document.querySelectorAll('[data-para="para"]');
+
+  paragraphs.forEach((container) => {
+    const paragraph = container.querySelector(".text");
+    const button = container.querySelector(".button");
+
+    if (!paragraph || !button) return;
+
+    // Store the original text
+    const fullText = paragraph.textContent.trim();
+
+    // Only apply if text is longer than maxChars
+    if (fullText.length <= maxChars) {
+      button.style.display = "none";
+      return;
+    }
+
+    // Set initial state
+    paragraph.dataset.fullText = fullText;
+    const truncatedText = fullText.slice(0, maxChars) + "...";
+    paragraph.textContent = truncatedText;
+
+    // Add event listener to button
+    button.addEventListener("click", function () {
+      const isExpanded = paragraph.dataset.expanded === "true";
+
+      if (!isExpanded) {
+        paragraph.textContent = paragraph.dataset.fullText;
+        button.querySelector("span").textContent = "Read Less";
+        paragraph.dataset.expanded = "true";
+      } else {
+        paragraph.textContent = truncatedText;
+        button.querySelector("span").textContent = "Read All";
+        paragraph.dataset.expanded = "false";
+      }
+    });
+  });
+};

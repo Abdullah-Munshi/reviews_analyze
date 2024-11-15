@@ -24,7 +24,7 @@ export class ReviewManager {
   ) {
     this.container = document.getElementById(containerId);
     this.controls = document.getElementById(controlsId);
-    this.enablePagination = enablePagination; // Enable pagination only for review-area
+    this.enablePagination = enablePagination;
     this.compactLayout = compactLayout;
     this.paginationContainer = enablePagination
       ? document.createElement("div")
@@ -35,18 +35,48 @@ export class ReviewManager {
     }
     this.reviews = [];
     this.filteredReviews = [];
-    this.currentSortOrder = "desc"; // Default to 'desc' for most recent
+    this.currentSortOrder = "desc";
     this.currentRatingFilter = "all";
     this.currentPage = 1;
     this.itemsPerPage = itemsPerPage;
   }
 
   async init() {
-    this.reviews = await fetchReviews();
-    console.log("Fetched Reviews:", this.reviews);
-    this.filteredReviews = [...this.reviews];
-    this.setupControls();
-    this.applySortAndFilter();
+    this.showLoader();
+    try {
+      this.reviews = await fetchReviews();
+      this.filteredReviews = [...this.reviews];
+      this.setupControls();
+      this.applySortAndFilter();
+    } catch (error) {
+      console.error("Error in init():", error);
+      this.showError("Failed to load reviews.");
+      throw error; // Keep error for debugging
+    } finally {
+      this.hideLoader();
+    }
+  }
+
+  showLoader() {
+    if (this.container) {
+      this.container.innerHTML = `<div class="loader">Loading...</div>`;
+    }
+  }
+
+  hideLoader() {
+    if (this.container) {
+      // Only clear the loader, not the reviews
+      const loader = this.container.querySelector(".loader");
+      if (loader) {
+        loader.remove();
+      }
+    }
+  }
+
+  showError(message) {
+    if (this.container) {
+      this.container.innerHTML = `<div class="error">${message}</div>`;
+    }
   }
 
   setupControls() {
@@ -126,19 +156,15 @@ export class ReviewManager {
   }
 
   applySortAndFilter() {
-    console.log("Current Rating Filter:", this.currentRatingFilter);
-    console.log("Current Sort Order:", this.currentSortOrder);
     // go to the first page
     this.currentPage = 1;
     // Apply filtering first
     this.filterReviews(this.currentRatingFilter);
-    console.log("Filtered Reviews:", this.filteredReviews);
     // Then apply sorting on the filtered results
     this.sortReviews(this.currentSortOrder, "date");
-    console.log("Sorted Reviews:", this.filteredReviews);
+
     // Render the results
     this.renderReviews();
-
     if (this.enablePagination) {
       this.updatePagination();
     }
@@ -160,9 +186,6 @@ export class ReviewManager {
       const [day, month, year] = dateString.split("/").map(Number);
       return new Date(year, month - 1, day); // JavaScript Date months are 0-indexed
     };
-
-    console.log("check date is format correctly or not", parseDate);
-
     this.filteredReviews.sort((a, b) => {
       if (criteria === "date") {
         const dateA = parseDate(a.purchaseDate);
@@ -248,11 +271,11 @@ export class ReviewManager {
       
     </div>
     <div class="rv-bottom">
-      <button class="btn_style2 like-btn"><img class="mr-10" src="${likeFilledIcon}" alt="L" /><span>${
+      <button class="btn_style2 like-btn"><svg width="11" height="11" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" class="thumbs-up-alt"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z" fill="#9b9898"></path></svg><span>${
         review.liked
       }</span></button>
       <div class="dropdown-widget" data-arrow="false" data-show-up="true">
-        <button class="btn_style2 dropdown-btn"><img class="ml-10" src="${share2FilledIcon}" alt="S" />Share</button>
+        <button class="btn_style2 dropdown-btn"><svg width="12" height="12" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="share-icon"><path d="M94.51,39.22a.28.28,0,0,0,0-.09v0h0v-.25c0-.06,0-.13,0-.19s0-.09,0-.13h0a3.13,3.13,0,0,0-1-2L70.61,13.67c-.83-.83-1.66-1.67-2.5-2.49a3,3,0,0,0-3.56-.57,3.14,3.14,0,0,0-1.8,3q0,6.16,0,12.33c0,.23-.07.27-.29.27H51.28q-4.76,0-9.5.43c-2.12.2-4.23.47-6.32.85A54.76,54.76,0,0,0,25.79,30a35.34,35.34,0,0,0-8.34,4.38A26.18,26.18,0,0,0,8.16,46.27,36.86,36.86,0,0,0,6,55.64c-.23,1.91-.32,3.84-.38,5.77a32.1,32.1,0,0,0,.61,7A58.75,58.75,0,0,0,8.25,76c1.29,3.8,2.87,7.48,4.51,11.14A8.41,8.41,0,0,0,13.83,89a1.59,1.59,0,0,0,1.65.64,1.5,1.5,0,0,0,1.13-1.12,2.6,2.6,0,0,0,0-1.11c-.19-1.38-.28-2.77-.35-4.16a54.88,54.88,0,0,1,.23-9.76,33.4,33.4,0,0,1,1.71-7.25,18.41,18.41,0,0,1,4-6.63,22.51,22.51,0,0,1,9.26-5.71A44.83,44.83,0,0,1,39,52.32c2-.29,4-.46,6-.57,2.27-.13,4.55-.16,6.83-.17H62.52c.19,0,.24.05.24.23q0,3.54,0,7.06c0,1.79,0,3.58,0,5.36a3.17,3.17,0,0,0,5.53,2.19l19-19,6.31-6.3a3.19,3.19,0,0,0,.94-1.79s0,0,0-.07Z" fill="#9b9898" class="cls-2"></path></svg>Share</button>
         <div class="dropdown-content">
           ${review.shareLinks
             .map(
@@ -349,7 +372,6 @@ export class ReviewManager {
 
   //   calcualte average rating
   calculateRatingStats() {
-    console.log(this.reviews);
     const totalReviews = this.reviews.length;
     if (totalReviews === 0) {
       return {
