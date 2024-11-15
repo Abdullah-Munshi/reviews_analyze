@@ -1543,7 +1543,7 @@ data-styled.g103[id="ScreenReaderOnly-feefo-ui__sc-19ccsvp-0"] {
 }
 @media (min-width: 841px) {
   .ihtHMC {
-    margin-top: 8rem;
+    margin-top: 5rem;
     width: 15.5rem;
   }
 }
@@ -4035,3 +4035,9 @@ data-styled.g410[id="sc-59180a97-11"] {
   padding: 16px;
 }
 /* tab css end */
+
+/* footer css start */
+.footer-area {
+  background-color: rgb(11, 6, 249);
+}
+/* footer css end */
