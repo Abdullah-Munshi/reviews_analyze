@@ -2,7 +2,7 @@
 
 export async function fetchReviews() {
   try {
-    const response = await fetch("../../dev-data/reviews.json");
+    const response = await fetch("./reviews.json");
     if (!response.ok) throw new Error("Could not fetch reviews data");
 
     const data = await response.json();

@@ -12,6 +12,7 @@ import shareIcon from "../assets/icons/share.svg";
 import likeIcon from "../assets/icons/like.svg";
 import likeFilledIcon from "../assets/icons/likeFilled.svg";
 import share2FilledIcon from "../assets/icons/share2Filled.svg";
+import caretDownIcon from "../assets/icons/caretDown.svg";
 
 export class ReviewManager {
   constructor(
@@ -382,11 +383,11 @@ export class ReviewManager {
         const percentage = ((count / totalReviews) * 100).toFixed(1); // Percentage of reviews for this rating
         return `
         <div class="rating-bar">
-          <span>${star} Star</span>
+          <div class="bar-values"><span>${star} Star</span>
+           <span>${count}</span></div>
           <div class="bar">
             <div class="fill" style="width: ${percentage}%"></div>
           </div>
-          <span>${count}</span>
         </div>
       `;
       })
@@ -399,9 +400,9 @@ export class ReviewManager {
       <div class="avg-stars">${generateStarRating(Math.round(avgRating))}</div>
       <div class="avg-dropdwon">
           <button class="trigger">
-            <span>${avgRating}</span><img src="./images/caretDown.svg" alt="" />
+            <span><strong class="f-rate">${avgRating}</strong>/5</span><img src="${caretDownIcon}" alt="" />
           </button>
-          ${ratingBars}
+          <div class="rating-bar-wrap">${ratingBars}</div>
       </div>
     </div>
   `;
