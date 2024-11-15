@@ -7,6 +7,7 @@ import {
   updateActiveSortButton,
   generateStarRating,
   getReviewsLastYear,
+  formatDate,
 } from "./utils.js";
 
 import shareIcon from "../assets/icons/share.svg";
@@ -257,7 +258,11 @@ export class ReviewManager {
     <div class="rv-middle">
       <div class="rating-star">${generateStarRating(review.rating)}</div>
       <div class="name-date">
-      <strong>${review.username}</strong>-<span>review.purchaseDate</span> 
+      <strong>${
+        review.username
+      }</strong><span style="margin: 0 3px;">-</span><span>${formatDate(
+        review.purchaseDate
+      )}</span> 
       </div>
       <p class="rv-comment">${displayedComment}</p>
      

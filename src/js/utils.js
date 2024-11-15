@@ -151,3 +151,21 @@ export function getReviewsLastYear(reviews) {
 
   return reviewsLastYear.length; // Return the count of reviews in the past year
 }
+
+export function formatDate(dateString) {
+  // Split the input string into day, month, and year
+  const [day, month, year] = dateString.split("/");
+
+  // Create a new Date object (months are 0-indexed in JavaScript)
+  const date = new Date(`${year}-${month}-${day}`);
+
+  // Options for formatting the date
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  // Format the date as "Month day, year" (e.g., "September 20, 2024")
+  return date.toLocaleDateString("en-US", options);
+}

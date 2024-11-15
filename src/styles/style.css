@@ -4060,3 +4060,20 @@ data-styled.g410[id="sc-59180a97-11"] {
   padding-bottom: 15px;
 }
 /* accordion css end */
+
+.style-2 .read-more {
+  color: #0088c1;
+  font-size: 12px;
+  border: 0;
+  padding: 0;
+  font-weight: 600;
+}
+.style-2 .read-more svg {
+  width: 15px;
+}
+.style-2 .read-more svg path {
+  fill: #0088c1;
+}
+.style-2 .read-more:hover {
+  color: #0088c1;
+}
