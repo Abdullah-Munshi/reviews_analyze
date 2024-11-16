@@ -77,19 +77,10 @@ export class AB_Accordion {
 }
 
 export class OffCanvasController {
-  constructor(
-    offCanvasId,
-    openButtonId,
-    closeButtonId,
-    reviewManagerInstance,
-    tabInstance
-  ) {
+  constructor(offCanvasId, openButtonId, closeButtonId) {
     this.offCanvas = document.getElementById(offCanvasId);
     this.openButton = document.getElementById(openButtonId);
     this.closeButton = document.getElementById(closeButtonId);
-    this.reviewManagerInstance = reviewManagerInstance;
-    this.tabInstance = tabInstance;
-    this.hasLoaded = false;
 
     // Bind events
     this.openButton.addEventListener("click", () => this.show());
@@ -99,12 +90,6 @@ export class OffCanvasController {
   show() {
     this.offCanvas.classList.add("show");
     this.openButton.style.display = "none";
-    if (!this.hasLoaded) {
-      this.reviewManagerInstance.init().then(() => {
-        this.reviewManagerInstance.renderRatingWidgetStats();
-        this.hasLoaded = true;
-      }); // Lazy-load data only when opened
-    }
   }
 
   hide() {

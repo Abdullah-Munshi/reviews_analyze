@@ -1,13 +1,13 @@
 /* Font's Linking  */
 @font-face {
   font-family: "HeldaneTextRegular";
-  src: url("./fonts/HeldaneTextRegular.otf") format("opentype");
+  src: url("../assets/fonts/HeldaneTextRegular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "HeldaneTextMedium";
-  src: url("./fonts/HeldaneTextMedium.otf") format("opentype");
+  src: url("../assets/fonts/HeldaneTextMedium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
 }
@@ -200,6 +200,53 @@ footer {
 }
 /* footer css end */
 
+.service-rate-display {
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 32px;
+}
+.blk-img img {
+  max-width: 100%;
+  width: 100%;
+}
+.service-rate-display .blk-img {
+  margin-top: 42px;
+}
+.service-rate-display p {
+  margin-bottom: 8px;
+}
+.cmn-link-with-underline {
+  display: inline-block;
+  text-decoration: underline;
+  transition: 0.3s;
+  margin-top: 8px;
+}
+.cmn-link-with-underline:hover {
+  color: #3b526a;
+}
+
+.service-rate-display p {
+  margin-bottom: 8px;
+}
+.rating_star {
+  display: inline-flex;
+  align-items: center;
+}
+.rating_star img {
+  width: 21px;
+}
+.avg_rating_1_wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.avg_rating_1_wrap span {
+  display: inline-block;
+  font-size: 20px;
+  transform: translateY(1px);
+}
 /* responsive css start */
 @media screen and (min-width: 768px) {
   .cs_container {
@@ -224,11 +271,11 @@ footer {
     font-size: 22px;
   }
   .follower-showcase > p {
-  max-width: 290px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 15px;
-}
+    max-width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
   .trusted {
     font-size: 17px;
     line-height: 1.6;

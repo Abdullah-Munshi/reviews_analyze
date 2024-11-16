@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     false,
     true
   );
+  rvWidgetManager.init().then(() => {
+    rvWidgetManager.renderRatingWidgetStats();
+    rvWidgetManager.calculateRatingStats();
+  });
 
   // create tab instance
   const tab = new Tab("tabs");
@@ -22,8 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const offCanvasController = new OffCanvasController(
     "offcanvas-widget",
     "open-widget-button",
-    "close-widget-button",
-    rvWidgetManager,
-    tab
+    "close-widget-button"
   );
 });

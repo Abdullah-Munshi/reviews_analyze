@@ -396,7 +396,13 @@ export class ReviewManager {
       ratingCounts[review.rating] += 1;
     });
 
-    const avgRating = (totalRating / totalReviews).toFixed(1); // Calculate average rating
+    const avgRating = (totalRating / totalReviews).toFixed(1);
+
+    if (document.getElementById("avg_rating_1") !== null) {
+      document.getElementById(
+        "avg_rating_1"
+      ).innerHTML = `<strong>${avgRating}</strong>/5`;
+    }
 
     return { avgRating, ratingCounts, totalReviews };
   }
